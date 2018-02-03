@@ -70,4 +70,4 @@ The matcher also checks if elements are missing or if too many are supplied.
 * @guid@
 
 # Credits
-This wraps [NMatcher](https://github.com/defrag/NMatcher). Check out the readme
+This wraps [NMatcher](https://github.com/defrag/NMatcher). Check out that readme for more detail.
