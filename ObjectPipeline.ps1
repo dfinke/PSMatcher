@@ -22,9 +22,12 @@ function Test-MatchExpression {
     )
 
     Process {
-        New-MatchExpression $Value $Expression |
-            Add-Member -PassThru -MemberType NoteProperty -Name "Value" -Value $Value |
-            Add-Member -PassThru -MemberType NoteProperty -Name "Expression" -Value $Expression
+        New-MatchExpression $Value $Expression | 
+            Select-Object `
+                Successful, `
+                @{Name="Value";Exp={$Value}}, `
+                @{Name="Expression";Exp={$Expression}}, `
+                ErrorMessage
     }
 }
 
