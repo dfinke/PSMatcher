@@ -32,6 +32,14 @@ function Test-MatchExpression {
 }
 
 $list = echo a 1.2 "2018-01-01 11:00:12" "2018-02-29 11:00:12"
+$matchExpressoions = echo @string@ '@string@.IsDateTime()' @double@
+
+$matchExpressoions |
+    ForEach {
+        $list | Test-MatchExpression $_
+    }
+return 
+$list = echo a 1.2 "2018-01-01 11:00:12" "2018-02-29 11:00:12"
 
 $list | Test-MatchExpression "@string@"
 $list | Test-MatchExpression "@string@.IsDateTime()"
