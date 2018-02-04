@@ -1,4 +1,4 @@
-﻿Import-Module -Name "$PSScriptRoot\..\PSMatcher.psm1" -Force
+﻿Import-Module -Name "$PSScriptRoot\..\PSMatcher.psd1" -Force
 
 $actual = @"
 {
@@ -8,7 +8,7 @@ $actual = @"
         "zipCode" : "80-000",
         "meta" : {
             "name" : "foobar",
-            "shipping": 99.99,            
+            "shipping": 99.99,
             "enabled" : false,
             "_link" : "http://example.com?page=2",
             "_something" : null,
