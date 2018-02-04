@@ -1,4 +1,4 @@
-﻿Import-Module ..\PSMatcher.psm1 -Force
+﻿Import-Module -Name "$PSScriptRoot\..\PSMatcher.psm1" -Force
 
 $actual = @"
 {
@@ -38,4 +38,4 @@ $expected = @"
 }
 "@
 
-Test-Json $actual $expected
+Test-Json -Value $actual -Referecnce $expected
