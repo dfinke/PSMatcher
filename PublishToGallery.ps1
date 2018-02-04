@@ -1,7 +1,7 @@
 $p = @{
     Name = "PSMatcher"
     NuGetApiKey = $NuGetApiKey
-    Path = $PSScriptRoot
+    #Path = $PSScriptRoot
 }
 
 Publish-Module @p
