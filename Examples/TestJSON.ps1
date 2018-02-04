@@ -39,7 +39,7 @@ $expected = @"
 "@
 
 # True Result
-Test-Json -Value $actual -Referecnce $expected
+Test-Json -Value $actual -Reference $expected
 
 # False Result
-Test-Json -Value $actual -Referecnce '{}'
+Test-Json -Value $actual -Reference '{}'

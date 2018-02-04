@@ -46,7 +46,7 @@ function Test-Json {
         )]
         [Alias('Test')]
         [ValidateNotNullOrEmpty()]
-        $Referecnce
+        $Reference
     )
 
     Begin {
@@ -54,7 +54,7 @@ function Test-Json {
     }
 
     Process {
-        $matcher.MatchJson($Value, $Referecnce) | New-BoolCompatibleResult
+        $matcher.MatchJson($Value, $Reference) | New-BoolCompatibleResult
     }
 }
 
