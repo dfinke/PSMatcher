@@ -9,12 +9,53 @@ $null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\$target\NMatcher.d
 $null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\$target\Newtonsoft.Json.dll")
 $null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\$target\Sprache.dll")
 
-function Test-Json {
+function New-BoolCompatibleResult {
+    [CmdletBinding()]
+    [OutputType([bool])]
     param(
-        $actual,
-        $test
+        [Parameter(
+            Mandatory,
+            ValueFromPipeline
+        )]
+        [NMatcher.Matching.Result]
+        $Result
     )
 
-    $m = New-Object NMatcher.Matcher
-    $m.MatchJson($actual, $test) #.Successful
+    Process {
+        $Result.Successful |
+            Add-Member -MemberType ScriptProperty -Name Successful -Value { $this.Result.Successful } -Force -PassThru |
+            Add-Member -MemberType ScriptProperty -Name ErrorMessage -Value { $this.Result.ErrorMessage } -Force -PassThru |
+            Add-Member -NotePropertyName Result -NotePropertyValue $result -TypeName NMatcher.Matching.Result -Force -PassThru
+    }
 }
+
+function Test-Json {
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param(
+        [Parameter(
+            Mandatory,
+            ValueFromPipeline
+        )]
+        [Alias('Actual')]
+        [ValidateNotNullOrEmpty()]
+        $Value ,
+
+        [Parameter(
+            Mandatory
+        )]
+        [Alias('Test')]
+        [ValidateNotNullOrEmpty()]
+        $Reference
+    )
+
+    Begin {
+        $matcher = New-Object -TypeName NMatcher.Matcher
+    }
+
+    Process {
+        $matcher.MatchJson($Value, $Reference) | New-BoolCompatibleResult
+    }
+}
+
+Export-ModuleMember -Function Test-Json

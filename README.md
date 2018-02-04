@@ -7,7 +7,7 @@ It's here on the [PowerShell Gallery](https://www.powershellgallery.com/packages
 This PowerShell has been tested on Windows in both v5.1 and v6.0
 
 ```powershell
-Import-Module ..\PSMatcher.psm1 -Force
+Import-Module -Name "$PSScriptRoot\..\PSMatcher.psm1" -Force
 
 $actual = @"
 {
@@ -17,7 +17,7 @@ $actual = @"
         "zipCode" : "80-000",
         "meta" : {
             "name" : "foobar",
-            "shipping": 99.99,
+            "shipping": 99.99,            
             "enabled" : false,
             "_link" : "http://example.com?page=2",
             "_something" : null,
@@ -47,13 +47,18 @@ $expected = @"
 }
 "@
 
-Test-Json $actual $expected
+# True Result
+Test-Json -Value $actual -Reference $expected
+
+# False Result
+Test-Json -Value $actual -Reference '{}'
 ```
 # Results
 ```
-Successful ErrorMessage
----------- ------------
-      True
+Successful ErrorMessage                              Result                  
+---------- ------------                              ------                  
+      True                                           NMatcher.Matching.Result
+     False Expected value did not appear at path id. NMatcher.Matching.Result
 ```
 
 # In addition
