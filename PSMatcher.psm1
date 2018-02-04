@@ -21,18 +21,11 @@ function New-BoolCompatibleResult {
         $Result
     )
 
-    Begin {
-        $displayProperties = @('Successful', 'ErrorMessage') -as [String[]]
-        $propertySet = New-Object -TypeName System.Management.Automation.PSPropertySet -ArgumentList 'DefaultPropertySet', $displayProperties
-        $ddpStandardMembers = @($propertySet) -as [System.Management.Automation.PSMemberInfo[]]
-    }
-
     Process {
         $Result.Successful |
             Add-Member -NotePropertyName Result -NotePropertyValue $result -TypeName NMatcher.Matching.Result -Force -PassThru |
             Add-Member -MemberType ScriptProperty -Name Successful -Value { $this.Result.Successful } -Force -PassThru |
-            Add-Member -MemberType ScriptProperty -Name ErrorMessage -Value { $this.Result.ErrorMessage } -Force -PassThru |
-            Add-Member -MemberType MemberSet -Name PSStandardMembers -Value $ddpStandardMembers -Force -PassThru
+            Add-Member -MemberType ScriptProperty -Name ErrorMessage -Value { $this.Result.ErrorMessage } -Force -PassThru
     }
 }
 
