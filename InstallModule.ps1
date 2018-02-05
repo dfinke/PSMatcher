@@ -12,6 +12,7 @@ if (-not (Test-Path $TargetPath)) {
 
 Copy-Item .\PSMatcher.psd1 $TargetPath
 Copy-Item .\PSMatcher.psm1 $TargetPath
+Copy-Item .\PesterMatchJsonTemplate.ps1 $TargetPath
 Copy-Item .\README.md $TargetPath
 Copy-Item .\classic "$TargetPath\classic" -Recurse
 Copy-Item .\dotnetcore "$TargetPath\dotnetcore" -Recurse
