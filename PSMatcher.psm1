@@ -58,4 +58,6 @@ function Test-Json {
     }
 }
 
-Export-ModuleMember -Function Test-Json
+. $PSScriptRoot\PesterMatchJsonTemplate.ps1
+
+Export-ModuleMember -Function Test-Json, PesterMatchJsonTemplate
