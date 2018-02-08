@@ -3,8 +3,9 @@ PSMatcher is a test utility, that lets you easier test responses and json, when 
 
 It's here on the [PowerShell Gallery](https://www.powershellgallery.com/packages/PSMatcher)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/8yhhd5qu00pp04ue/branch/master?svg=true)](https://ci.appveyor.com/project/dfinke/psmatcher/branch/master)
+* Appveyor build - [![Build status](https://ci.appveyor.com/api/projects/status/8yhhd5qu00pp04ue/branch/master?svg=true)](https://ci.appveyor.com/project/dfinke/psmatcher/branch/master)
 
+* Travis-ci build - [![Build Status](https://travis-ci.org/dfinke/PSMatcher.svg?branch=master)](https://travis-ci.org/dfinke/PSMatcher)
 
 # Overview
 This PowerShell has been tested on Windows in both v5.1 and v6.0
