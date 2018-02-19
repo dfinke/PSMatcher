@@ -4,7 +4,7 @@
 RootModule = 'PSMatcher.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.0'
+ModuleVersion = '2.0.0'
 
 # ID used to uniquely identify this module
 GUID = '0a1d5c08-32eb-4b57-91a0-e855845c5cd5'
