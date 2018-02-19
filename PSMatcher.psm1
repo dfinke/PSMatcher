@@ -1,13 +1,17 @@
-﻿$PSVersion = $PSVersionTable.PSVersion.Major
+﻿# $PSVersion = $PSVersionTable.PSVersion.Major
 
-switch ($PSVersion) {
-    5 {$target = "classic"}
-    6 {$target = "dotnetcore"}
-}
+# switch ($PSVersion) {
+#     5 {$target = "classic"}
+#     6 {$target = "dotnetcore"}
+# }
 
-$null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\$target\NMatcher.dll")
-$null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\$target\Newtonsoft.Json.dll")
-$null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\$target\Sprache.dll")
+# $null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\$target\NMatcher.dll")
+# $null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\$target\Newtonsoft.Json.dll")
+# $null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\$target\Sprache.dll")
+
+$null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\lib\NMatcher.dll")
+$null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\lib\Newtonsoft.Json.dll")
+$null = [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\lib\Sprache.dll")
 
 function New-BoolCompatibleResult {
     [CmdletBinding()]
@@ -58,6 +62,37 @@ function Test-Json {
     }
 }
 
-. $PSScriptRoot\PesterMatchJsonTemplate.ps1
+function Test-XML {
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param(
+        [Parameter(
+            Mandatory,
+            ValueFromPipeline
+        )]
+        [Alias('Actual')]
+        [ValidateNotNullOrEmpty()]
+        $Value ,
 
-Export-ModuleMember -Function Test-Json, PesterMatchJsonTemplate
+        [Parameter(
+            Mandatory
+        )]
+        [Alias('Test')]
+        [ValidateNotNullOrEmpty()]
+        $Reference
+    )
+
+    Begin {
+        $matcher = New-Object -TypeName NMatcher.Matcher
+    }
+
+    Process {
+        $matcher.MatchXML($Value, $Reference) | New-BoolCompatibleResult
+    }
+}
+
+. $PSScriptRoot\PesterMatchJsonTemplate.ps1
+. $PSScriptRoot\PesterMatchXMLTemplate.ps1
+
+#Export-ModuleMember -Function Test-Json, Test-XML, PesterMatchJsonTemplate
+Export-ModuleMember -Function Test-Json, Test-XML, PesterMatchJsonTemplate, PesterMatchXMLTemplate

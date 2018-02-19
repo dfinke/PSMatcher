@@ -15,3 +15,19 @@ describe 'Test JSON' {
             Should MatchJsonTemplate '{"Id":"@guid@","name":"john","price":"@double@"}'
     }
 }
+
+describe 'Test XML' {
+    Import-Module $PSScriptRoot\PSMatcher.psd1 -Force
+
+    It 'Should match XML' {
+        "<users><user>Foobar</user></users>" |
+            Should MatchXMLTemplate "<users><user>Foobar</user></users>"
+    }
+
+    It 'Should fail XML match' {
+        $actual = "<users><user>Foobar</user></users>"
+        $expected = "<users><user>Foobar1</user></users>"
+
+        Test-XML $actual $expected | Should Be $false
+    }
+}
