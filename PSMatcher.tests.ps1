@@ -30,4 +30,95 @@ describe 'Test XML' {
 
         Test-XML $actual $expected | Should Be $false
     }
+
+    It "Matches XML With Expression" {
+        $actual = "<users><user>Foobar</user></users>"
+        $expected = "<users><user>@string@</user></users>"
+        
+        $actual | Should MatchXMLTemplate $expected
+    }
+
+    It "Matches XML With Attribute" {
+        $actual = '<users><user id="1">Foobar</user></users>'
+        $expected = '<users><user id="@string@">@string@.Contains("Foo")</user></users>'
+
+        $actual | Should MatchXMLTemplate $expected
+    }
+
+    It "Matches more complex xml" {
+        $actual = @'
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2001/12/soap-envelope" soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+    <soap:Body xmlns:m="http://www.example.org/stock">
+        <m:GetStockPrice>
+            <m:StockName>IBM</m:StockName>
+            <m:StockValue>Any Value</m:StockValue>
+            </m:GetStockPrice>
+    </soap:Body>
+</soap:Envelope>
+'@
+
+        $expected = @'
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap = "http://www.w3.org/2001/12/soap-envelope" soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+    <soap:Body xmlns:m="http://www.example.org/stock">
+        <m:GetStockPrice>
+            <m:StockName>IBM</m:StockName>
+            <m:StockValue>Any Value</m:StockValue>
+            </m:GetStockPrice>
+    </soap:Body>
+</soap:Envelope>
+'@
+
+        $actual | Should MatchXMLTemplate $expected
+    }
+
+    It "Matches more complex xml with expressions" {
+        $actual = @'
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2001/12/soap-envelope" soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+    <soap:Body xmlns:m="http://www.example.org/stock">
+        <m:GetStockPrice>
+            <m:StockName>IBM</m:StockName>
+            <m:StockValue>Any Value</m:StockValue>
+            </m:GetStockPrice>
+    </soap:Body>
+</soap:Envelope>
+'@
+
+            $expected = @'
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="@string@" soap:encodingStyle="@string@">
+    <soap:Body xmlns:m="http://www.example.org/stock">
+        <m:GetStockPrice>
+            <m:StockName>@string@</m:StockName>
+            <m:StockValue>@string@.Contains('Any')</m:StockValue>
+            </m:GetStockPrice>
+    </soap:Body>
+</soap:Envelope>
+'@
+
+        $actual | Should MatchXMLTemplate $expected
+    }
+
+    It "Matches with optional" {
+        $actual = @'
+<note>
+    <to>Tove</to>
+    <heading>Reminder</heading>
+    <body>Don't forget me this weekend!</body>
+</note>
+'@
+
+        $expected = @'
+<note>
+<to>Tove</to>
+    <from>@string?@</from>
+    <heading>Reminder</heading>
+    <body>Don't forget me this weekend!</body>
+</note>
+'@
+
+        $actual | Should MatchXMLTemplate $expected
+    }
 }
