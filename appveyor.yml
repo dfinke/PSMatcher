@@ -1,5 +1,5 @@
-image:
-- Ubuntu
+# image:
+# - Ubuntu
 #   - Visual Studio 2017
 
 build: off
