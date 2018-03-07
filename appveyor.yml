@@ -1,6 +1,6 @@
-# image:
+image:
+  - Ubuntu
 #   - Visual Studio 2017
-  # - Ubuntu
 
 build: off
 
