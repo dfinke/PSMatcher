@@ -5,5 +5,5 @@ image:
 build: off
 
 test_script:
-  - ps: .\DoTests.ps1
+  # - ps: .\DoTests.ps1
   - pwsh: .\DoTests.ps1
